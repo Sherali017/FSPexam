@@ -1,0 +1,17 @@
+<nav class="navbar navbar-light bg-light p-3">
+    <div class="container">
+        <a href="{% url 'news:list' %}" class="navbar-brand">
+            <h4>Newsuz</h4>
+        </a>
+        {% for i in categories %}
+            <a href="{% url 'news:category' pk=i.pk %}">
+                <h6 class="mt-1">{{ i.title }}</h6>
+            </a>
+        {% endfor %}
+        <form class="d-flex">
+            <input value="{{ request.GET.q }}" name="q" class="form-control me-2" type="search" placeholder="Search"
+                   aria-label="Search">
+            <button class="btn btn-secondary" type="submit">Search</button>
+        </form>
+    </div>
+</nav>

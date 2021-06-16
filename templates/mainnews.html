@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load my_filters %}
+
+{% block content %}
+    <div class="row">
+        {% for i in object_list %}
+            <div class="card col-4 m-4" style="width: 18rem;">
+                <a href="{% url 'news:detail' pk=i.pk %}">
+                    <img class="card-img-top mt-3" src="{{ i.image.url }}" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.title|to_upper }}</h5>
+                    <p class="card-text">{{ i.description }}</p>
+                    <div>
+                        <a href="{% url 'news:detail' pk=i.pk %}">
+                            <button class="btn btn-secondary">Read More</button>
+                        </a>
+                        <div class="mt-2">
+                            <h6>{{ i.created_at|timesince }}</h6>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div aria-label="Page navigation example">
+        <ul class="pagination justify-content">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="/?page={{ page_obj.previous_page_number }}" tabindex="-1"
+                       aria-disabled="true">Previous</a>
+                </li>
+            {% endif %}
+            {% for i in range %}
+                <li class="page-item {% if page_obj.number == forloop.counter %}active{% endif %}">
+                    <a class="page-link" href="/?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+                </li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="/?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endblock %}
